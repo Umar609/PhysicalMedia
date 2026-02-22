@@ -1,3 +1,5 @@
+import { Link, Route, Routes } from 'react-router-dom';
+
 const mediaSections = [
   {
     title: 'CDs',
@@ -33,53 +35,27 @@ const mediaSections = [
   },
 ];
 
-function App() {
+const routePages = [
+  { path: '/addnewrecipe', title: 'Add New CD' },
+  { path: '/recipe', title: 'View CDs & Cassettes' },
+  { path: '/deleterecipe', title: 'Wishlist CDs & Cassettes' },
+  { path: '/addnewinventory', title: 'Add New Vinyl / Game' },
+  { path: '/viewinventory', title: 'View Vinyls / Games' },
+  { path: '/deleteinventory', title: 'Wishlist Vinyls / Games' },
+];
+
+function PageLayout({ children }) {
   return (
     <div className="d-flex flex-column h-100">
       <nav className="navbar navbar-expand-lg navbar-light bg-primary">
         <div className="container-fluid">
-          <a className="btn btn-outline-light me-auto" href="/">
+          <Link className="btn btn-outline-light me-auto" to="/">
             Home
-          </a>
+          </Link>
         </div>
       </nav>
 
-      <main className="flex-shrink-0 d-flex flex-column align-items-center justify-content-center">
-        <div className="container m-3">
-          <div className="mt-4 p-5 bg-primary text-white rounded text-center">
-            <h1>SHELVED - A Physical Media Catalogue</h1>
-            <h4>Umar Muheed</h4>
-          </div>
-        </div>
-
-        <div className="container">
-          <div className="row justify-content-center">
-            {mediaSections.map((section) => (
-              <div className="col-md-6 mb-4" key={section.title}>
-                <div className="card shadow-sm h-100">
-                  <div className="card-body">
-                    <div className="container m-3">
-                      <div className="mt-3 p-2 bg-white text-black rounded text-center">
-                        <p>{section.title}</p>
-                      </div>
-                    </div>
-
-                    {section.actions.map((action) => (
-                      <div className="container m-3 text-center" key={action.label}>
-                        <h2>
-                          <a type="button" className="btn btn-primary" href={action.href}>
-                            {action.label}
-                          </a>
-                        </h2>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </main>
+      {children}
 
       <footer className="bg-dark text-light py-4 mt-auto">
         <div className="container">
@@ -95,19 +71,19 @@ function App() {
               <h5 className="border-bottom border-light pb-2">Quick Links</h5>
               <ul className="list-unstyled">
                 <li>
-                  <a href="/" className="text-light text-decoration-none">
+                  <Link to="/" className="text-light text-decoration-none">
                     Dashboard
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/recipe" className="text-light text-decoration-none">
+                  <Link to="/recipe" className="text-light text-decoration-none">
                     Test
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/viewinventory" className="text-light text-decoration-none">
+                  <Link to="/viewinventory" className="text-light text-decoration-none">
                     Test
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -121,6 +97,93 @@ function App() {
         </div>
       </footer>
     </div>
+  );
+}
+
+function HomePage() {
+  return (
+    <main className="flex-shrink-0 d-flex flex-column align-items-center justify-content-center">
+      <div className="container m-3">
+        <div className="mt-4 p-5 bg-primary text-white rounded text-center">
+          <h1>SHELVED - A Physical Media Catalogue</h1>
+          <h4>Umar Muheed</h4>
+        </div>
+      </div>
+
+      <div className="container">
+        <div className="row justify-content-center">
+          {mediaSections.map((section) => (
+            <div className="col-md-6 mb-4" key={section.title}>
+              <div className="card shadow-sm h-100">
+                <div className="card-body">
+                  <div className="container m-3">
+                    <div className="mt-3 p-2 bg-white text-black rounded text-center">
+                      <p>{section.title}</p>
+                    </div>
+                  </div>
+
+                  {section.actions.map((action) => (
+                    <div className="container m-3 text-center" key={`${section.title}-${action.label}`}>
+                      <h2>
+                        <Link className="btn btn-primary" to={action.href}>
+                          {action.label}
+                        </Link>
+                      </h2>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </main>
+  );
+}
+
+function PlaceholderPage({ title }) {
+  return (
+    <main className="flex-shrink-0 d-flex align-items-center justify-content-center">
+      <div className="container my-5">
+        <div className="card shadow-sm">
+          <div className="card-body text-center p-5">
+            <h2 className="mb-3">{title}</h2>
+            <p className="mb-4">This page is now routed by React. Add your form/table component here next.</p>
+            <Link className="btn btn-primary" to="/">
+              Back to Dashboard
+            </Link>
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+}
+
+function NotFoundPage() {
+  return (
+    <main className="flex-shrink-0 d-flex align-items-center justify-content-center">
+      <div className="container my-5 text-center">
+        <h2>404 - Page Not Found</h2>
+        <p className="mb-4">The route you entered does not exist.</p>
+        <Link className="btn btn-primary" to="/">
+          Go Home
+        </Link>
+      </div>
+    </main>
+  );
+}
+
+function App() {
+  return (
+    <PageLayout>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        {routePages.map((route) => (
+          <Route key={route.path} path={route.path} element={<PlaceholderPage title={route.title} />} />
+        ))}
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </PageLayout>
   );
 }
 
