@@ -1,3 +1,5 @@
+import CdCard from "../components/CDCard";
+
 function Home() {
     const cds = [
         {id: 1, title: "Dawn FM", artist: "The Weeknd", year: 2022},
@@ -7,6 +9,9 @@ function Home() {
     ];
   return (
     <div className="home">
+        <div className="cd-grid">
+            {cds.map(cd => (cd => <CDCard cd={cd} key={cd.id}/>)(cd))}
+        </div>
     </div>
   );
 }
