@@ -10,8 +10,9 @@ function Home() {
   return (
     <div className="home">
         <div className="cd-grid">
-            {cds.map(cd => (cd => <CDCard cd={cd} key={cd.id}/>)(cd))}
+            {cds.map(cd => <CdCard cd={cd} key={cd.id}/> )}
         </div>
     </div>
   );
 }
+export default Home;
