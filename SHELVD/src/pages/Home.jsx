@@ -11,10 +11,10 @@ function Home() {
         {id: 4, title: "The Melodic Blue", artist: "Baby Keem", year: 2024},
     ];
 
-  const handleSearch = (event) => {
-    event.preventDefault();
-    const query = event.target.elements.search.value;
-    alert(`Searching for: ${query}`);
+  const handleSearch = (e) => {    
+    e.preventDefault();
+    alert(searchQuery);
+    setSearchQuery("Search for media....");
   }  
 
   return (
