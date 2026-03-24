@@ -29,8 +29,15 @@ function Home() {
              />
             <button type="submit" className="search-button">Search</button>
         </form>
+
+
         <div className="cd-grid">
-            {cds.map(cd => <CdCard cd={cd} key={cd.id}/> )}
+            {cds.map((cd) => 
+                cd.title.toLowerCase().startsWith(searchQuery.toLowerCase()) && 
+                (<CdCard cd={cd} key={cd.id}/>  
+
+                )
+            )}
         </div>
     </div>
   );
