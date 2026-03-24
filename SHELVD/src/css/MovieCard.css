@@ -1,4 +1,4 @@
-.movie-card {
+.cd-card {
   position: relative;
   border-radius: 8px;
   overflow: hidden;
@@ -9,23 +9,23 @@
   flex-direction: column;
 }
 
-.movie-card:hover {
+.cd-card:hover {
   transform: translateY(-5px);
 }
 
-.movie-poster {
+.cd-cover {
   position: relative;
   aspect-ratio: 2/3;
   width: 100%;
 }
 
-.movie-poster img {
+.cd-cover img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.movie-overlay {
+.cd-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -44,11 +44,11 @@
   padding: 1rem;
 }
 
-.movie-card:hover .movie-overlay {
+.cd-card:hover .cd-overlay {
   opacity: 1;
 }
 
-.favorite-btn {
+.favourite-btn {
   position: absolute;
   top: 1rem;
   right: 1rem;
@@ -65,11 +65,11 @@
   transition: background-color 0.2s;
 }
 
-.favorite-btn:hover {
+.favourite-btn:hover {
   background-color: rgba(0, 0, 0, 0.8);
 }
 
-.favorite-btn.active {
+.favourite-btn.active {
   color: #ff4757;
 }
 
@@ -83,7 +83,7 @@
   margin-top: 0.5rem;
 }
 
-.movie-info {
+.cd-info {
   padding: 1rem;
   flex: 1;
   display: flex;
@@ -91,12 +91,12 @@
   gap: 0.5rem;
 }
 
-.movie-info h3 {
+.cd-info h3 {
   font-size: 1rem;
   margin: 0;
 }
 
-.movie-info p {
+.cd-info p {
   color: #999;
   font-size: 0.9rem;
 }
@@ -108,15 +108,15 @@
 }
 
 @media (max-width: 768px) {
-  .movie-card {
+  .cd-card {
     font-size: 0.9rem;
   }
 
-  .movie-info {
+  .cd-info {
     padding: 0.75rem;
   }
 
-  .favorite-btn {
+  .favourite-btn {
     width: 32px;
     height: 32px;
     font-size: 1.2rem;

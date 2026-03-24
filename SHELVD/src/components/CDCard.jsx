@@ -1,3 +1,5 @@
+import '../css/MovieCard.css';
+
 function CdCard({cd}) {
 
     function onfavouriteClick() {
