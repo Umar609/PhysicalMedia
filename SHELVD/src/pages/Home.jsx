@@ -22,7 +22,7 @@ function Home() {
         <form onSubmit={handleSearch} className="search-form">
             <input 
              type="text" 
-             placeholder="Search for a CD..." 
+             placeholder="Search for a CD...w" 
              className="search-input"
              value={searchQuery}
              onChange={(e) => setSearchQuery(e.target.value)}
@@ -33,9 +33,8 @@ function Home() {
 
         <div className="cd-grid">
             {cds.map((cd) => 
-                cd.title.toLowerCase().startsWith(searchQuery.toLowerCase()) && 
-                (<CdCard cd={cd} key={cd.id}/>  
-
+                (
+                <CdCard cd={cd} key={cd.id}/>  
                 )
             )}
         </div>
