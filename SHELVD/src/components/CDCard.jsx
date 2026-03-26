@@ -8,7 +8,7 @@ function CdCard({cd}) {
 
   return <div className="cd-card">
     <div className="cd-cover">
-        <img src={cd.url} alt={cd.title}/>
+        <img src={`https://image.tmdb.org/t/p/w500${cd.poster_path}`} alt={cd.title}/>
         <div className="cd-overlay">
             <button className="favourite-btn" onClick={onfavouriteClick}>
                 🤍
