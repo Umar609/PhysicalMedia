@@ -26,18 +26,31 @@ function Home() {
         loadPopularMovies();
     }, []);
 
-  const handleSearch = (e) => {   
+  const handleSearch = async (e) => {   
     e.preventDefault();
-    alert(searchQuery);
-    setSearchQuery("Search for media....");
-  }  
+    if (!searchQuery.trim()) return;
+    if (loading) return;
+
+    setLoading(true);
+
+    try {
+      const searchResults = await searchMovies(searchQuery);
+      setCds(searchResults);
+      setError(null);
+    } catch (err) {
+      console.log(err);
+      setError("An error occurred while searching. Please try again.");
+    } finally {      
+      setLoading(false);
+    }
+  };  
 
   return (
     <div className="home">
         <form onSubmit={handleSearch} className="search-form">
             <input 
              type="text" 
-             placeholder="Search for a CD...w" 
+             placeholder="Search for a CD..." 
              className="search-input"
              value={searchQuery}
              onChange={(e) => setSearchQuery(e.target.value)}
@@ -46,13 +59,18 @@ function Home() {
         </form>
 
 
+          {error && <div className="error-message">{error}</div>}
+
+        {loading ? (
+          <div className="loading">Loading...</div>
+        ) : (        
         <div className="cd-grid">
             {cds.map((cd) => 
                 (
                 <CdCard cd={cd} key={cd.id}/>  
-                )
-            )}
+                ))}
         </div>
+      )}
     </div>
   );
 }
