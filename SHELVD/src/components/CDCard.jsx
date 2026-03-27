@@ -2,8 +2,16 @@ import '../css/MovieCard.css';
 import { useCDContext } from '../contexts/CDContext';
 
 function CdCard({cd}) {
-    const {isFavourite, addToFavourites, removeFromFavourites} = useCDContext();
+    const {
+        isFavourite,
+        addToFavourites,
+        removeFromFavourites,
+        isWishlisted,
+        addToWishlist,
+        removeFromWishlist,
+    } = useCDContext();
     const favourite = isFavourite(cd.id);
+    const wishlisted = isWishlisted(cd.id);
     const imageSrc = cd.poster_path?.startsWith("http")
         ? cd.poster_path
         : `https://image.tmdb.org/t/p/w500${cd.poster_path}`;
@@ -12,6 +20,12 @@ function CdCard({cd}) {
         e.preventDefault();
         if (favourite) removeFromFavourites(cd.id);
         else addToFavourites(cd);
+    }
+
+    function onWishlistClick(e) {
+        e.preventDefault();
+        if (wishlisted) removeFromWishlist(cd.id);
+        else addToWishlist(cd);
     }
 
     return (
@@ -37,6 +51,13 @@ function CdCard({cd}) {
                 title={favourite ? 'Remove from favourites' : 'Add to favourites'}
             >
                 ♥
+            </button>
+            <button
+                className={`wishlist-btn ${wishlisted ? 'active' : ''}`}
+                onClick={onWishlistClick}
+                title={wishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+            >
+                ✓
             </button>
         </div>
     );
