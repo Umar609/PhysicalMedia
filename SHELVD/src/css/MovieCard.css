@@ -124,6 +124,35 @@
     color: #ff4757;
 }
 
+.wishlist-btn {
+    position: absolute;
+    top: 46px;
+    right: 8px;
+    color: rgba(255,255,255,0.92);
+    font-size: 1rem;
+    padding: 0;
+    background: rgba(0,0,0,0.45);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    transition: background 0.2s, color 0.2s;
+    z-index: 10;
+}
+
+.wishlist-btn:hover {
+    background: rgba(0,0,0,0.75);
+    color: white;
+}
+
+.wishlist-btn.active {
+    color: #ff4757;
+}
+
 .cd-info {
     position: absolute;
     bottom: -52px;
@@ -174,4 +203,10 @@
     height: 32px;
     font-size: 1.2rem;
   }
+
+    .wishlist-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
+    }
 }
