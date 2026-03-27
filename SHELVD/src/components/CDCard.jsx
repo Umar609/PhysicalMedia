@@ -5,6 +5,9 @@ import { useCDContext } from '../contexts/CDContext';
 function CdCard({cd}) {
     const {isFavourite, addToFavourites, removeFromFavourites} = useCDContext();
     const favourite = isFavourite(cd.id);
+        const imageSrc = cd.poster_path?.startsWith("http")
+            ? cd.poster_path
+            : `https://image.tmdb.org/t/p/w500${cd.poster_path}`;
 
     function onfavouriteClick(e) {
        e.preventDefault()
@@ -14,7 +17,7 @@ function CdCard({cd}) {
 
   return <div className="cd-card">
     <div className="cd-cover">
-        <img src={`https://image.tmdb.org/t/p/w500${cd.poster_path}`} alt={cd.title}/>
+        <img src={imageSrc} alt={cd.title}/>
         <div className="cd-overlay">
             <button className={`favourite-btn ${favourite ? "active" : ''}`} onClick={onfavouriteClick}>
                 ♥

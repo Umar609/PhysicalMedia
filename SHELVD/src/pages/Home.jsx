@@ -1,6 +1,6 @@
 import CdCard from "../components/CDCard";
 import {useState, useEffect} from "react";
-import { searchMovies, getPopularMovies } from "../services/api";
+import { searchCDs, getPopularCDs } from "../services/api";
 import '../css/Home.css'
 
 function Home() {
@@ -12,7 +12,7 @@ function Home() {
     useEffect(() => {
         const loadPopularMovies = async () => {
           try {
-            const popularMovies = await getPopularMovies();
+            const popularMovies = await getPopularCDs();
             setCds(popularMovies);
           } catch (err) {
             console.log(err)
@@ -34,7 +34,7 @@ function Home() {
     setLoading(true);
 
     try {
-      const searchResults = await searchMovies(searchQuery);
+      const searchResults = await searchCDs(searchQuery);
       setCds(searchResults);
       setError(null);
     } catch (err) {
