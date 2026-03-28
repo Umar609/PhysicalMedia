@@ -7,11 +7,25 @@ const mapReleaseGroupToCD = (releaseGroup) => ({
     poster_path: `https://coverartarchive.org/release-group/${releaseGroup.id}/front-250`,
 });
 
+const getRecentAlbumsQuery = () => {
+    const currentYear = new Date().getFullYear();
+    const startYear = currentYear - 1;
+
+    return `primarytype:album AND firstreleasedate:[${startYear}-01-01 TO *]`;
+};
+
+const sortByNewestReleaseDate = (left, right) => {
+    const leftDate = left["first-release-date"] || "";
+    const rightDate = right["first-release-date"] || "";
+
+    return rightDate.localeCompare(leftDate);
+};
+
 export const getPopularCDs = async () => {
-    // MusicBrainz has no "popular chart" endpoint on v2 web service, so use a
-    // broad album search as a homepage feed.
+    // MusicBrainz has no dedicated recent releases feed, so fetch recent album
+    // release groups and sort them client-side by first release date.
     const response = await fetch(
-        `${BASE_URL}/release-group?query=${encodeURIComponent("tag:pop AND primarytype:album")}&fmt=json&limit=25`
+        `${BASE_URL}/release-group?query=${encodeURIComponent(getRecentAlbumsQuery())}&fmt=json&limit=100`
     );
 
     if (!response.ok) {
@@ -21,7 +35,10 @@ export const getPopularCDs = async () => {
     const data = await response.json();
     const releaseGroups = data["release-groups"] ?? [];
 
-    return releaseGroups.map(mapReleaseGroupToCD);
+    return releaseGroups
+        .sort(sortByNewestReleaseDate)
+        .slice(0, 25)
+        .map(mapReleaseGroupToCD);
 }
 
 export const searchCDs = async (query) => {
