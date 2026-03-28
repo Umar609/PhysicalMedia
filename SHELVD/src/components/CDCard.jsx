@@ -46,16 +46,16 @@ function CdCard({cd}) {
                 <p>{cd.artist}</p>
             </div>
             <button
-                className={`owned-btn ${owned ? 'active' : ''}`}
-                onClick={onOwnedClick}
-                title={owned ? 'Remove from owned' : 'Add to owned'}
+                className={`wishlist-btn ${wishlisted ? 'active' : ''}`}
+                onClick={onWishlistClick}
+                title={wishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
             >
                 ♥
             </button>
             <button
-                className={`wishlist-btn ${wishlisted ? 'active' : ''}`}
-                onClick={onWishlistClick}
-                title={wishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+                className={`owned-btn ${owned ? 'active' : ''}`}
+                onClick={onOwnedClick}
+                title={owned ? 'Remove from owned' : 'Add to owned'}
             >
                 ✓
             </button>
