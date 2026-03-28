@@ -6,7 +6,7 @@ import CdCard from '../components/CDCard';
 function Owned() {
   const { owned } = useCDContext();
 
-  if (owned) {
+  if (owned.length > 0) {
     return (
     <div className="owned">
           <h2>Your Owned</h2>

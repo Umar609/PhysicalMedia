@@ -6,7 +6,7 @@ import CdCard from '../components/CDCard';
 function Wishlist() {
   const { wishlist } = useCDContext();
 
-  if (wishlist) {
+  if (wishlist.length > 0) {
     return (
     <div className="wishlist">
           <h2>Your Wishlist</h2>
