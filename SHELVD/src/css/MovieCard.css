@@ -95,7 +95,7 @@
     z-index: -1;
 }
 
-.favourite-btn {
+.owned-btn {
     position: absolute;
     top: 8px;
     right: 8px;
@@ -115,12 +115,12 @@
     z-index: 10;
 }
 
-.favourite-btn:hover {
+.owned-btn:hover {
     background: rgba(0,0,0,0.75);
     color: white;
 }
 
-.favourite-btn.active {
+.owned-btn.active {
     color: #ff4757;
 }
 
@@ -198,7 +198,7 @@
     padding: 0.75rem;
   }
 
-  .favourite-btn {
+    .owned-btn {
     width: 32px;
     height: 32px;
     font-size: 1.2rem;

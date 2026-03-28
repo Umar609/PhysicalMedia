@@ -5,35 +5,35 @@ const CDContext = createContext();
 export const useCDContext  = () => useContext(CDContext);
 
 export const CDProvider = ({children}) => {
-    const [favourites, setFavourites] = useState([])
+    const [owned, setOwned] = useState([])
     const [wishlist, setWishlist] = useState([])
     
     useEffect(() => {
-        const storedFavs = localStorage.getItem("favourites")
+        const storedOwned = localStorage.getItem("owned")
         const storedWishlist = localStorage.getItem("wishlist")
         
-        if (storedFavs) setFavourites(JSON.parse(storedFavs));
+        if (storedOwned) setOwned(JSON.parse(storedOwned));
         if (storedWishlist) setWishlist(JSON.parse(storedWishlist));
     }, [])
 
     useEffect(() => {
-        localStorage.setItem("favourites", JSON.stringify(favourites));
-    }, [favourites])
+        localStorage.setItem("owned", JSON.stringify(owned));
+    }, [owned])
 
     useEffect(() => {
         localStorage.setItem("wishlist", JSON.stringify(wishlist));
     }, [wishlist])
 
-    const addToFavourites = (cd) => {
-            setFavourites(prev => [...prev, cd]);
+    const addToOwned = (cd) => {
+            setOwned(prev => [...prev, cd]);
         }
 
-    const removeFromFavourites = (cdId) => {
-        setFavourites(prev => prev.filter(cd => cd.id !== cdId));
+    const removeFromOwned = (cdId) => {
+        setOwned(prev => prev.filter(cd => cd.id !== cdId));
     }
 
-    const isFavourite = (cdId) => {
-        return favourites.some(cd => cd.id === cdId);
+    const isOwned = (cdId) => {
+        return owned.some(cd => cd.id === cdId);
     }
 
     const addToWishlist = (cd) => {
@@ -49,10 +49,10 @@ export const CDProvider = ({children}) => {
     }
 
     const value = {
-        favourites,
-        addToFavourites,
-        removeFromFavourites,
-        isFavourite,
+        owned,
+        addToOwned,
+        removeFromOwned,
+        isOwned,
         wishlist,
         addToWishlist,
         removeFromWishlist,

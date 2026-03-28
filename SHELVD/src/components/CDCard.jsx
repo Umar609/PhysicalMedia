@@ -3,23 +3,23 @@ import { useCDContext } from '../contexts/CDContext';
 
 function CdCard({cd}) {
     const {
-        isFavourite,
-        addToFavourites,
-        removeFromFavourites,
+        isOwned,
+        addToOwned,
+        removeFromOwned,
         isWishlisted,
         addToWishlist,
         removeFromWishlist,
     } = useCDContext();
-    const favourite = isFavourite(cd.id);
+    const owned = isOwned(cd.id);
     const wishlisted = isWishlisted(cd.id);
     const imageSrc = cd.poster_path?.startsWith("http")
         ? cd.poster_path
         : `https://image.tmdb.org/t/p/w500${cd.poster_path}`;
 
-    function onfavouriteClick(e) {
+    function onOwnedClick(e) {
         e.preventDefault();
-        if (favourite) removeFromFavourites(cd.id);
-        else addToFavourites(cd);
+        if (owned) removeFromOwned(cd.id);
+        else addToOwned(cd);
     }
 
     function onWishlistClick(e) {
@@ -46,9 +46,9 @@ function CdCard({cd}) {
                 <p>{cd.artist}</p>
             </div>
             <button
-                className={`favourite-btn ${favourite ? 'active' : ''}`}
-                onClick={onfavouriteClick}
-                title={favourite ? 'Remove from favourites' : 'Add to favourites'}
+                className={`owned-btn ${owned ? 'active' : ''}`}
+                onClick={onOwnedClick}
+                title={owned ? 'Remove from owned' : 'Add to owned'}
             >
                 ♥
             </button>

@@ -23,7 +23,7 @@ function Wishlist() {
   return (
     <div className="wishlist-empty">
         <h2>Your wishlist is empty!</h2>
-        <p>Start adding your favourite media to see them here.</p>
+        <p>Start adding your owned media to see them here.</p>
     </div>
   )
 }
