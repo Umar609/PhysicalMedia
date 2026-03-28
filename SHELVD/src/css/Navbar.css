@@ -1,47 +1,125 @@
+:root {
+  --nav-black: #0f0f0f;
+  --nav-gray: #3f3f3f;
+  --nav-white: #ffffff;
+}
+
 .navbar {
-  background-color: #000000;
-  padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  gap: 1rem;
+  padding: 1rem 1.5rem;
 }
 
-.navbar-brand {
-  font-size: 1.5rem;
-  font-weight: bold;
+.nav-logo {
+  color: var(--nav-white);
+  text-decoration: none;
+  font-size: 1.15rem;
+  letter-spacing: 0.08em;
+  font-weight: 700;
 }
 
-.navbar-links {
+.nav-wrap {
+  border: 1px solid var(--nav-gray);
+  width: fit-content;
+  border-radius: 999px;
+  position: relative;
+  box-shadow: inset 10px 0 10px #000000;
+  background: linear-gradient(0deg, #141414, #242424);
+}
+
+.nav-wrap::after {
+  content: "";
+  display: block;
+  position: absolute;
+  inset: -5px;
+  background: linear-gradient(180deg, var(--nav-gray), #212121);
+  border-radius: 999px;
+  z-index: -1;
+}
+
+.nav {
+  margin: 6px;
   display: flex;
-  gap: 2rem;
+  align-items: center;
+  position: relative;
+  z-index: 2;
 }
 
 .nav-link {
-  font-size: 1rem;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  transition: background-color 0.2s;
+  position: relative;
+  display: inline-block;
+  padding: 0.9rem 1.6rem;
+  color: var(--nav-white);
+  text-decoration: none;
+  border-radius: 999px;
+  line-height: 1;
+  z-index: 3;
 }
 
-.nav-link:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+.nav-link.active {
+  color: #000000;
 }
 
-@media (max-width: 768px) {
+.bubble {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  height: calc(100% - 12px);
+  border-radius: 999px;
+  transition: transform 0.22s ease, width 0.22s ease, opacity 0.2s ease;
+}
+
+.bubble.active {
+  z-index: 1;
+  background: linear-gradient(180deg, #f2f2f2, #b3b3b3);
+  box-shadow: inset 0 2px 7px #ffffff;
+}
+
+.bubble.hover {
+  z-index: 0;
+  background: linear-gradient(180deg, var(--nav-gray), #212121);
+  box-shadow: inset 0 2px 7px #ffffff29;
+}
+
+@media (max-width: 900px) {
   .navbar {
-    padding: 1rem;
+    flex-direction: column;
+    align-items: stretch;
   }
 
-  .navbar-brand {
-    font-size: 1.2rem;
+  .nav-logo {
+    text-align: center;
   }
 
-  .navbar-links {
-    gap: 1rem;
+  .nav-wrap {
+    margin: 0 auto;
+    width: calc(100% - 1rem);
+    max-width: 650px;
+  }
+
+  .nav {
+    justify-content: space-between;
   }
 
   .nav-link {
-    padding: 0.5rem;
+    padding: 0.8rem 0.9rem;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 540px) {
+  .navbar {
+    padding: 0.75rem;
+  }
+
+  .nav-wrap {
+    width: 100%;
+  }
+
+  .nav-link {
+    padding: 0.75rem 0.55rem;
+    font-size: 0.86rem;
   }
 }
