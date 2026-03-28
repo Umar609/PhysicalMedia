@@ -11,7 +11,7 @@ export const getPopularCDs = async () => {
     // MusicBrainz has no "popular chart" endpoint on v2 web service, so use a
     // broad album search as a homepage feed.
     const response = await fetch(
-        `${BASE_URL}/release-group?query=${encodeURIComponent("tag:pop AND primarytype:album")}&fmt=json&limit=10`
+        `${BASE_URL}/release-group?query=${encodeURIComponent("tag:pop AND primarytype:album")}&fmt=json&limit=25`
     );
 
     if (!response.ok) {
