@@ -19,6 +19,7 @@ function App() {
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/Login" element={<LogIn />} />
+          <Route path="/Signup" element={<SignUp />} />
         </Routes>
       </main>
     </CDProvider>
