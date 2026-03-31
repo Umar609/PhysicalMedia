@@ -1,4 +1,5 @@
 const BASE_URL = "https://musicbrainz.org/ws/2";
+const SEARCH_PAGE_SIZE = 100;
 
 const mapReleaseGroupToCD = (releaseGroup) => ({
     id: releaseGroup.id,
@@ -21,18 +22,22 @@ const sortByNewestReleaseDate = (left, right) => {
     return rightDate.localeCompare(leftDate);
 };
 
-export const getPopularCDs = async () => {
-    // MusicBrainz has no dedicated recent releases feed, so fetch recent album
-    // release groups and sort them client-side by first release date.
+const fetchReleaseGroups = async (query, limit, offset = 0) => {
     const response = await fetch(
-        `${BASE_URL}/release-group?query=${encodeURIComponent(getRecentAlbumsQuery())}&fmt=json&limit=100`
+        `${BASE_URL}/release-group?query=${encodeURIComponent(query)}&fmt=json&limit=${limit}&offset=${offset}`
     );
 
     if (!response.ok) {
-        throw new Error("Failed to load popular CDs");
+        throw new Error("Failed to load CDs");
     }
 
-    const data = await response.json();
+    return response.json();
+};
+
+export const getPopularCDs = async () => {
+    // MusicBrainz has no dedicated recent releases feed, so fetch recent album
+    // release groups and sort them client-side by first release date.
+    const data = await fetchReleaseGroups(getRecentAlbumsQuery(), SEARCH_PAGE_SIZE);
     const releaseGroups = data["release-groups"] ?? [];
 
     return releaseGroups
@@ -42,17 +47,20 @@ export const getPopularCDs = async () => {
 }
 
 export const searchCDs = async (query) => {
-    const response = await fetch(
-        `${BASE_URL}/release-group?query=${encodeURIComponent(`${query} AND primarytype:album`)}&fmt=json&limit=20`
-    );
+    const searchQuery = `${query} AND primarytype:album`;
+    const allReleaseGroups = [];
+    let offset = 0;
+    let totalCount = 0;
 
-    if (!response.ok) {
-        throw new Error("Failed to search CDs");
-    }
+    do {
+        const data = await fetchReleaseGroups(searchQuery, SEARCH_PAGE_SIZE, offset);
+        const releaseGroups = data["release-groups"] ?? [];
 
-    const data = await response.json();
-    const releaseGroups = data["release-groups"] ?? [];
+        totalCount = data.count ?? releaseGroups.length;
+        allReleaseGroups.push(...releaseGroups);
+        offset += releaseGroups.length;
+    } while (offset < totalCount);
 
-    return releaseGroups.map(mapReleaseGroupToCD);
+    return allReleaseGroups.map(mapReleaseGroupToCD);
 }
 
