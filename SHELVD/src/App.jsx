@@ -5,6 +5,7 @@ import Wishlist from './pages/Wishlist'
 import Profile from './pages/Profile'
 import LogIn from './pages/LogIn'
 import SignUp from './pages/Signup'
+import LandingPage from './pages/LandingPage'
 import { Routes, Route } from 'react-router-dom'
 import NavBar from './components/NavBar'
 import { CDProvider } from './contexts/CDContext'
@@ -21,6 +22,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/Login" element={<LogIn />} />
           <Route path="/Signup" element={<SignUp />} />
+          <Route path="/Landing" element={<LandingPage />} />
         </Routes>
       </main>
     </CDProvider>
