@@ -14,7 +14,7 @@ function LogIn() {
           <label className="label" htmlFor="login-password">Enter Password</label>
         </div>
         <a href="#">Forgot your password?</a>
-        <button className="submit-btn" type="submit">Sign In</button>
+        <button className="submit-btn" type="submit">Log In</button>
       </form>
     </section>
   )
