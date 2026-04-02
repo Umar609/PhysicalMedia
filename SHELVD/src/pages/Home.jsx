@@ -50,7 +50,7 @@ function Home() {
         <form onSubmit={handleSearch} className="search-form">
             <input 
              type="text" 
-             placeholder="Search for a CD..." 
+             placeholder="Search for a CD" 
              className="search-input"
              value={searchQuery}
              onChange={(e) => setSearchQuery(e.target.value)}
