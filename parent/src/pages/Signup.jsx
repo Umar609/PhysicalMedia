@@ -7,7 +7,7 @@ function SignUp() {
         <p className="title">Sign Up</p>
         <div className="input-field">
           <input id="signup-username" required className="input" type="text" />
-          <label className="label" htmlFor="signup-username">Enter Username</label>
+          <label className="label" htmlFor="signup-username">Enter Username - test</label>
         </div>
         <div className="input-field">
           <input id="signup-email" required className="input" type="email" />
