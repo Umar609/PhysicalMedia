@@ -3,7 +3,7 @@ const FRONT_PAGE_LIMIT = 25;
 const SEARCH_LIMIT = 25;
 const RETRY_ATTEMPTS = 2;
 const RETRY_DELAY_MS = 2000;
-const POPULAR_SEEDS = ["r&b"];
+const POPULAR_SEEDS = ["r&b", "rnb", "soul"];
 
 // Discogs Auth Flow (preferred for frontend):
 // 1) Personal token: VITE_DISCOGS_TOKEN
@@ -266,7 +266,8 @@ export const getPopularCDs = async () => {
     for (const seed of POPULAR_SEEDS) {
         for (const year of years) {
             try {
-                const data = await searchDiscogs(seed, 40, { year });
+                // Use style param for better genre matching + sort by community "have" count
+                const data = await searchDiscogs(seed, 30, { year, sort: "have", sort_order: "desc" });
                 const results = data.results ?? [];
                 console.log(`[Shelvd] Seed "${seed}" (${year}): ${results.length} results`);
                 candidates.push(...results);
@@ -277,15 +278,32 @@ export const getPopularCDs = async () => {
     }
 
     if (candidates.length === 0) {
+        // If year-filtered search returned nothing, try without year filter
+        console.warn("[Shelvd] No year-filtered results, trying without year filter...");
+        for (const seed of POPULAR_SEEDS) {
+            try {
+                const data = await searchDiscogs(seed, 40, { sort: "have", sort_order: "desc" });
+                const results = data.results ?? [];
+                console.log(`[Shelvd] Seed "${seed}" (no year): ${results.length} results`);
+                candidates.push(...results);
+            } catch (err) {
+                console.warn(`[Shelvd] Seed "${seed}" (no year) failed:`, err.message);
+            }
+        }
+    }
+
+    if (candidates.length === 0) {
         console.warn("[Shelvd] No results from any seed query. Check your Discogs credentials.");
         return [];
     }
 
-    const mapped = dedupeById(candidates.map(mapReleaseToCD));
+    const mapped = dedupeById(candidates.map(mapReleaseToCD))
+        .filter((cd) => !/^various\s+artists?$/i.test(cd.artist));
 
-    // Hydrate all candidates to get popularity scores + covers
+    // Only hydrate the top candidates (capped at 35) to avoid rate limits
+    const toHydrate = mapped.slice(0, 35);
     const hydrated = [];
-    for (const cd of mapped) {
+    for (const cd of toHydrate) {
         const details = await fetchReleaseDetails(cd.id);
         hydrated.push({
             ...cd,
@@ -300,7 +318,7 @@ export const getPopularCDs = async () => {
     hydrated.sort((a, b) => b._popularity - a._popularity);
     const top = hydrated.slice(0, FRONT_PAGE_LIMIT);
 
-    console.log(`[Shelvd] Top 25 by popularity:`, top.map((c) => `${c.artist} - ${c.title} (${c._popularity})`));
+    console.log(`[Shelvd] Top ${top.length} by popularity:`, top.map((c) => `${c.artist} - ${c.title} (${c._popularity})`));
 
     // Strip internal field before returning
     return top.map(({ _popularity, ...rest }) => rest);
