@@ -16,7 +16,7 @@ function Home() {
             setCds(popularMovies);
           } catch (err) {
             console.log(err)
-            setError("Failed to load popular movies. Please try again later.");
+            setError("Failed to load popular CDs. Please try again later.");
           }
           finally {
             setLoading(false);
