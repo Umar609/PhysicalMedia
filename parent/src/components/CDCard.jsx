@@ -1,6 +1,20 @@
 import '../css/MovieCard.css';
 import { useCDContext } from '../contexts/CDContext';
 
+const FALLBACK_COVER_SVG = `
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500">
+    <defs>
+        <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0%" stop-color="#5a5a5a" />
+            <stop offset="100%" stop-color="#2e2e2e" />
+        </linearGradient>
+    </defs>
+    <rect width="500" height="500" fill="url(#g)" />
+    <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" fill="#ffffff" font-size="36" font-family="Arial, sans-serif">No Cover</text>
+</svg>
+`;
+const FALLBACK_COVER = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(FALLBACK_COVER_SVG)}`;
+
 function CdCard({cd}) {
     const {
         isOwned,
@@ -12,9 +26,9 @@ function CdCard({cd}) {
     } = useCDContext();
     const owned = isOwned(cd.id);
     const wishlisted = isWishlisted(cd.id);
-    const imageSrc = cd.poster_path?.startsWith("http")
-        ? cd.poster_path
-        : `https://image.tmdb.org/t/p/w500${cd.poster_path}`;
+    const hasValidCover = typeof cd.poster_path === 'string'
+        && /^(https?:\/\/|data:image\/)/i.test(cd.poster_path);
+    const imageSrc = hasValidCover ? cd.poster_path : FALLBACK_COVER;
 
     function onOwnedClick(e) {
         e.preventDefault();
@@ -32,7 +46,7 @@ function CdCard({cd}) {
         <div className="cd-case">
             <div
                 className="album-art"
-                style={{ backgroundImage: `linear-gradient(rgba(255,255,255,0.15),rgba(255,255,255,0)), url(${imageSrc})` }}
+                style={{ backgroundImage: `linear-gradient(rgba(255,255,255,0.15),rgba(255,255,255,0)), url("${imageSrc}")` }}
                 title={cd.title}
             >
                 <div className="sup pos-tl"></div>
