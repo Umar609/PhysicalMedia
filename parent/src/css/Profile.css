@@ -38,7 +38,17 @@
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  margin-top: 1rem;
+}
+
+.profile-row h4 {
+  margin-top: 0;
+  margin-bottom: 0.4rem;
+}
+
+.profile-row .input-field {
+  margin-bottom: 0.5rem;
 }
 
 .profile-row > div {
