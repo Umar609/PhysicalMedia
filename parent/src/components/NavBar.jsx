@@ -38,7 +38,7 @@ function NavBar() {
 
     return (
         <header className="navbar">
-            <Link to="/" className="nav-logo">SHELVED.</Link>
+            <Link to="/" className="nav-logo">MELANGED</Link>
 
             <div className="nav-wrap" onMouseLeave={() => setHoverBubble((prev) => ({ ...prev, opacity: 0 }))}>
                 <div
