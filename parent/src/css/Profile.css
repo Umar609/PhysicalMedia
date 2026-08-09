@@ -27,6 +27,35 @@
   color: #e50914;
 }
 
+.profile textarea.input {
+  min-height: 140px;
+  width: 100%;
+  resize: vertical;
+  padding: 0.8rem;
+}
+
+.profile-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.profile-row > div {
+  flex: 1;
+  min-width: 240px;
+}
+
+.profile .input {
+  min-height: 46px;
+  width: 100%;
+}
+
+.profile #username {
+  width: 100%;
+}
+
+
 .owned-empty p {
   color: #999;
   font-size: 1.2rem;
