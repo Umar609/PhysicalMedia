@@ -4,7 +4,7 @@ function Landing() {
   return (
     <section className="landing-page">
       <form className="form-control" action="">
-        <p className="title">SHELVD</p>
+        <p className="title">Melanged</p>
         <p className="title">Physical Media Collection Site!</p>
         <div className="landing-actions">
           <button className="submit-btn" type="submit">Log In</button>
